@@ -5,7 +5,8 @@ class Robot:
     def __init__(self, name):
         self.robot_name = name
         self.health = 1000
-        self.weapon = Weapon()
+        self.weapon = Weapon("Slingshot", 150)
 
     def attack_dinosaur(self, dinosaur):
-        pass
+        remaining_health = dinosaur.health - self.weapon.attack_power
+        return remaining_health
