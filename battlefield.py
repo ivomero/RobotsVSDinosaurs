@@ -1,129 +1,126 @@
 from fleet import Fleet
 from herd import Herd
-from robot import Robot
 
 
 class Battlefield:
     def __init__(self):
         self.fleet = []
         self.herd = []
+        self.dino_dead = []
+        self.robo_dead = []
 
     def run_game(self):
 
-        run.display_welcome()
-        fleet = Fleet()
-        fleet.create_fleet()
+        self.display_welcome()
+        self.fleet = Fleet()
+        self.fleet.create_fleet()
 
-        herd = Herd()
-        herd.create_herd()
-        run.show_dino_opponent_options()
+        self.herd = Herd()
+        self.herd.create_herd()
+        self.show_dino_opponent_options()
 
     def display_welcome(self):
         print("Welcome to Robots vs Dinosaurs")
 
-    def battle(self):
+    def end_or_continue_1(self, dinosaur):
+        if dinosaur.health <= 0:
+            self.dino_dead.append(dinosaur)
+            self.herd.dinosaurs.remove(dinosaur)
+        else:
+            self.show_dino_opponent_options()
 
-        pass
+        if len(self.dino_dead) == 3:
+            print("ROBOTS WIN!")
+        else:
+            self.show_dino_opponent_options()
+
+    def end_or_continue_2(self, robot):
+
+        if robot.health <= 0:
+            self.robo_dead.append(robot)
+            self.fleet.robots.remove(robot)
+        else:
+            self.show_robo_opponent_options()
+        if len(self.robo_dead) == 3:
+            print("DINOSAURS WIN!")
+        else:
+            self.show_robo_opponent_options()
 
     def dino_turn(self, dinosaur):
-        fleet.display_robots()
+        self.fleet.display_robots()
         target_robot = input("What robot would you like to attack?")
-        for target in fleet.robots:
-            if target_robot == "Merrideth" and target.robot_name == "Merrideth":
-                target_robot == target.robot_name
+        for target in self.fleet.robots:
+            if target_robot == target.robot_name:
                 target.health -= dinosaur.attack_power
-                run.show_robo_opponent_options()
-                break
-            elif target_robot == "Delilah" and target.robot_name == "Delilah":
-                target_robot == target.robot_name
-                target.health -= dinosaur.attack_power
-                run.show_robo_opponent_options()
-                break
-            elif target_robot == "BethBeth" and target.robot_name == "BethBeth":
-                target_robot == target.robot_name
-                target.health -= dinosaur.attack_power
-                print(target.health)
-                run.show_robo_opponent_options()
+                self.end_or_continue_2(target)
                 break
 
     def robo_turn(self, robot):
-        herd.display_dinosaurs()
+        self.herd.display_dinosaurs()
         target_dinosaur = input("What dinosaur would you like to attack?")
-        for target in herd.dinosaurs:
-            if target_dinosaur == "Ken" and target.dinosaur_name == "Ken":
-                target_dinosaur == target.dinosaur_name
+        for target in self.herd.dinosaurs:
+            if target_dinosaur == target.dinosaur_name:
                 target.health -= robot.weapon.attack_power
-                run.show_dino_opponent_options()
-                break
-            elif target_dinosaur == "Dennis" and target.dinosaur_name == "Dennis":
-                target_dinosaur == target.dinosaur_name
-                target.health -= robot.weapon.attack_power
-                run.show_dino_opponent_options()
-                break
-            elif target_dinosaur == "Oscar" and target.dinosaur_name == "Oscar":
-                target_dinosaur == target.robot_name
-                target.health -= robot.weapon.attack_power
-                print(target.health)
-                run.show_dino_opponent_options()
+                self.end_or_continue_1(target)
                 break
 
     def show_dino_opponent_options(self):
-        fleet.display_robots()
-        herd.display_dinosaurs()
+        print("Robots:")
+        self.fleet.display_robots()
+        print("Dinosaurs:")
+        self.herd.display_dinosaurs()
         chosen_dinosaur = input("choose dinosaur")
-        for name in herd.dinosaurs:
-            if chosen_dinosaur == "Ken" and name.dinosaur_name == "Ken":
-
-                print("Robots")
-                run.dino_turn(name)
-                break
-            elif chosen_dinosaur == "Dennis" and name.dinosaur_name == "Dennis":
-
-                print("Robots")
-                run.dino_turn(name)
-                break
-            elif chosen_dinosaur == "Oscar" and name.dinosaur_name == "Oscar":
-
-                print("Robots")
-                run.dino_turn(name)
+        for name in self.herd.dinosaurs:
+            if chosen_dinosaur == name.dinosaur_name:
+                print("Robots:")
+                self.dino_turn(name)
                 break
 
     def show_robo_opponent_options(self):
-        fleet.display_robots()
-        herd.display_dinosaurs()
+        print("Robots:")
+        self.fleet.display_robots()
+        print("Dinosaurs:")
+        self.herd.display_dinosaurs()
         chosen_robot = input("choose robot")
-        for name in fleet.robots:
-            if chosen_robot == "Merrideth" and name.robot_name == "Merrideth":
-
-                print("Dinosaurs")
-                run.robo_turn(name)
+        for name in self.fleet.robots:
+            if chosen_robot == name.robot_name:
+                print("Dinosaurs:")
+                self.robo_turn(name)
                 break
-            elif chosen_robot == "Delilah" and name.robot_name == "Delilah":
-
-                print("Dinosaurs")
-                run.robo_turn(name)
-                break
-            elif chosen_robot == "BethBeth" and name.robot_name == "BethBeth":
-
-                print("Dinosaurs")
-                run.robo_turn(name)
-                break
+            # else:
+            #     print("not a valid robot, try again")
+            #     self.show_robo_opponent_options()
+            #     break
 
     def display_winner(self):
         pass
 
 
-run = Battlefield()
-fleet = Fleet()
-fleet.create_fleet()
-herd = Herd()
-herd.create_herd()
-'''
-DISPLAY HERD/FLEET
-fleet = Fleet()
-fleet.create_fleet()
-fleet.display_robots()
-herd = Herd()
-herd.create_herd()
-herd.display_dinosaurs()
-'''
+# run = Battlefield()
+# fleet = Fleet()
+# fleet.create_fleet()
+# herd = Herd()
+# herd.create_herd()
+
+# DISPLAY HERD/FLEET
+# fleet = Fleet()
+# fleet.create_fleet()
+# fleet.display_robots()
+# herd = Herd()
+# herd.create_herd()
+# herd.display_dinosaurs()
+# '''
+
+# robot = run.dino_turn()
+
+# robo_dead = []
+# if robot.health <= 0:
+#     robo_dead.append(robot)
+# else:
+#     run.show_robo_opponent_options()
+
+# if len(robo_dead) == 3:
+#     print("DINOSAURS WIN!")
+
+# else:
+#     run.show_robo_opponent_options()
