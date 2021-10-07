@@ -52,18 +52,21 @@ class Battlefield:
         herd.display_dinosaurs()
         chosen_dinosaur = input("choose dinosaur")
         for name in herd.dinosaurs:
-            if chosen_dinosaur == "Ken":
+            if chosen_dinosaur == "Ken" and name.dinosaur_name == "Ken":
                 chosen_dinosaur == name.dinosaur_name
+                print(name.dinosaur_name)
                 print("Robots")
                 run.dino_turn(name)
                 break
-            elif chosen_dinosaur == "Dennis":
+            elif chosen_dinosaur == "Dennis" and name.dinosaur_name == "Dennis":
                 chosen_dinosaur == name.dinosaur_name
+                print(name.dinosaur_name)
                 print("Robots")
                 run.dino_turn(name)
                 break
-            elif chosen_dinosaur == "Oscar":
+            elif chosen_dinosaur == "Oscar" and name.dinosaur_name == "Oscar":
                 chosen_dinosaur == name.dinosaur_name
+                print(name.dinosaur_name)
                 print("Robots")
                 run.dino_turn(name)
                 break
